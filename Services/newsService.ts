@@ -1,10 +1,14 @@
+import { injectable, inject } from "tsyringe";
 import { News } from "../Domain/news";
-import { NewsRepository } from "../Repository/clienteRepository";
+import { INewsRepository } from "../Repository/iClienteRepository";
+import { INewsService } from "./iNewsService";
 
-export class NewsService {
+@injectable()
+export class NewsService implements INewsService {
+
+    constructor(@inject("INewsRepository") private _repository: INewsRepository) { }
 
     Save(news: News) {
-        var newsRepository = new NewsRepository();
-        newsRepository.Save(news);
+        this._repository.Save(news);
     }
 }
